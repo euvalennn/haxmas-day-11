@@ -8,7 +8,10 @@ const posts = (await getCollection("blog")).sort(
 );
 ---
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>blog posts</title>
+</head>
 <div class="posts-page page-shell">
   <header class="page-header posts-page-header">
     <a href="/" class="home-link">&larr; home</a>
