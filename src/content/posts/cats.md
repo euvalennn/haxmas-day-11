@@ -41,7 +41,7 @@ Finally, the last one...
 
 ![cat](/cat-5.jpeg)
 
-<span style="font-family: 'Schoolbell', cursive; font-size: 1.25rem; font-weight: 600;">meow this is my favorite font i'm definitely a cat typing this okay bye meow</span>
+<span style="font-family: 'Schoolbell', cursive; font-size: 1.25rem;">meow this is my favorite font i'm definitely a cat typing this okay bye meow</span>
 
 <br>
 
