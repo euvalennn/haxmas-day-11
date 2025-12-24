@@ -1,0 +1,39 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import FormattedDate from "../components/FormattedDate.astro";
+import "../styles/global.css";
+import "../styles/post.css";
+
+type Props = CollectionEntry<"blog">["data"];
+const { title, description, pubDate, heroImage } = Astro.props;
+---
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<div class="post-page page-shell">
+  <article class="post">
+    <header>
+      <a href="/posts" class="posts-back">&larr; go back</a>
+      <div class="post-info">
+        <h1>{title}</h1>
+        <p class="description">{description}</p>
+        {
+          heroImage && (
+            <Image src={heroImage} format="webp" alt={title} class="hero" />
+          )
+        }
+        <p class="date">
+          <FormattedDate date={pubDate} />
+        </p>
+      </div>
+      <div style="flex: 1;"></div>
+    </header>
+    <div class="body">
+      <slot />
+    </div>
+  </article>
+</div>
+<script src="/oneko/oneko.js" data-cat="/oneko/oneko.gif" is:inline></script>

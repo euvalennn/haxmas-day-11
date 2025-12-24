@@ -1,0 +1,78 @@
+---
+import { getCollection } from "astro:content";
+import FormattedDate from "../../components/FormattedDate.astro";
+import "../../styles/global.css";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<div class="posts-page page-shell">
+  <header class="page-header posts-page-header">
+    <a href="/" class="home-link">&larr; home</a>
+    <div class="header">
+      <h1>my posts!</h1>
+      <p class="tagline">yeah uhhh there aren't a lot of them lol</p>
+    </div>
+    <div style="flex: 1;"></div>
+  </header>
+
+  {posts.length === 0 && <p class="empty">no posts yet D:</p>}
+
+  <div class="posts">
+    <div class="filter">
+      <input type="text" id="searchBar" placeholder="Search posts..." />
+      <div class="dropdown">
+        <label for="order">Order by:</label>
+        <select name="order" id="order">
+          <option value="newest" selected>Newest</option>
+          <option value="oldest">Oldest</option>
+        </select>
+      </div>
+    </div>
+    <div class="articles">
+      {
+        posts.map((post) => (
+          <article class="post-card">
+            <a href={`/posts/${post.id}`} class="title-link">
+              {post.data.title}
+            </a>
+            <p class="description">{post.data.description}</p>
+            <p class="meta">
+              Published on <FormattedDate date={post.data.pubDate} />
+            </p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</div>
+<script src="/oneko/oneko.js" data-cat="/oneko/oneko.gif" is:inline></script>
+<script>
+  const list = document.querySelector(".articles");
+  const articles = document.getElementsByTagName("article");
+  const searchBar = document.getElementById("searchBar") as HTMLInputElement;
+  const dropdown = document.getElementById("order") as HTMLSelectElement;
+  searchBar.addEventListener("keydown", searchPosts);
+  dropdown.addEventListener("change", changeOrder);
+
+  function searchPosts() {
+    const filter = searchBar.value.toUpperCase();
+    for (let i = 0; i < articles.length; i++) {
+      const title = articles[i].firstElementChild!.innerHTML;
+      if (title.toUpperCase().indexOf(filter) > -1) {
+        articles[i].style.display = "";
+      } else {
+        articles[i].style.display = "none";
+      }
+    }
+  }
+
+  function changeOrder() {
+    for (let i = 0; i < list!.childNodes.length; i++) {
+      list!.insertBefore(list!.childNodes[i], list!.firstChild);
+    }
+  }
+</script>
